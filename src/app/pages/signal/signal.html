@@ -1,0 +1,267 @@
+<h1>COUNTERS</h1>
+<div class="mx-8 mt-10">
+<!-- INCREASE -->
+ <h2> Age: {{age()}} </h2>
+ <div class="flex gap-5 border-b">
+    <button (click)="increaseAge()" class="cursor-pointer mt-3">Increase</button>
+    <button (click)="decreaseAge()" class="cursor-pointer mt-3">Decrease</button>
+    <button (click)="reset()" class="cursor-pointer mt-3">Reset</button>
+
+    
+</div>
+
+
+
+
+
+<!-- ===========================================
+            DARK MODE AND LIGHT MODE
+    =========================================== -->
+    <h1>DARK MODE AND LIGHT MODE</h1>
+<div class="border-b mt-10">
+<div [class.dark]="darkMode()" >
+  <p>Welcome to my application</p>
+
+  <button (click)="toggleTheme()">
+    Toggle theme
+  </button>
+</div>
+</div>
+
+
+
+<div class="app-container" [class.dark-theme]="darkMode()">
+
+  <button type="button" (click)="toggleTheme()">
+    {{ darkMode() ? '☀️ Light Mode' : '🌙 Dark Mode' }}
+  </button>
+
+  <h2>My Signal Component</h2>
+
+  <p>Click the button to change the theme.</p>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- ===========================================
+            SIGNAL FOR FORMS
+    =========================================== -->
+    <div class="border-b mt-10">
+     
+    <form #myForm="ngForm" (ngSubmit)="submitForm(myForm)" class="mb-5">
+
+  <input
+    type="text"
+    name="fname"
+    [ngModel]="formData().fname"
+    (ngModelChange)="updateField('fname', $event)"
+    required
+    placeholder="Enter first name"
+    class="border mt-3"
+  >
+
+   <input
+    type="text"
+    name="lname"
+    [ngModel]="formData().lname"
+    (ngModelChange)="updateField('lname', $event)"
+    required
+    placeholder="Enter last name"
+    class="border mt-3"
+  >
+
+  <input
+    type="email"
+    name="email"
+    [ngModel]="formData().email"
+    (ngModelChange)="updateField('email', $event)"
+    required
+    email
+    placeholder="Enter email"
+    class="border mt-3"
+  >
+
+
+
+
+<button type="submit" >
+  {{ saving() ? 'Saving...' : 'Submit' }}
+</button>
+
+@if (submitted()) {
+  <p>{{ message() }}</p>
+}
+
+<!-- [disabled]="saving()" -->
+  <!-- [disabled]="myForm.invalid" -->
+
+
+</form>
+
+    </div>
+
+
+
+    <!-- ===========================================
+            SIGNAL FOR TABLE
+         =========================================== -->
+
+<!-- Loading message -->
+@if (loading()) {
+  <p>Loading staff data...</p>
+}
+
+<!-- Error message -->
+@if (errorMessage()) {
+  <div class="error-message" role="alert">
+    {{ errorMessage() }}
+  </div>
+}
+
+<!-- Staff data -->
+@if (!loading() && !errorMessage()) {
+  @for (item of staff(); track item.id) {
+    <p>{{ item.fname }} {{ item.lname }}</p>
+  }
+}
+
+
+
+
+    <div class="mt-10">
+  <div class="border-b">
+
+  <div class="flex flex-col">
+ <form #staffForm="ngForm" (ngSubmit)="addStaff(staffForm)" class="flex flex-col">
+  <input
+    type="text"
+    name="fname"
+    ngModel
+    placeholder="First Name"
+    required
+  />
+
+  <input
+    type="text"
+    name="lname"
+    ngModel
+    placeholder="Last Name"
+    required
+  />
+
+  <input
+    type="email"
+    name="email"
+    ngModel
+    placeholder="Email"
+    required
+    email
+  />
+
+  <input
+    type="text"
+    name="department"
+    ngModel
+    placeholder="Department"
+    required
+  />
+
+  <input
+    type="text"
+    name="position"
+    ngModel
+    placeholder="Position"
+    required
+  />
+
+  <input
+    type="tel"
+    name="phone"
+    ngModel
+    placeholder="Phone"
+    required
+  />
+
+  <select name="gender" ngModel required>
+    <option value="">Select gender</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select>
+
+  <input type="date" name="dob" ngModel required />
+
+  <button type="submit" >
+    Add Staff
+  </button>
+</form>
+</div>
+
+        
+
+  <table class="w-full mt-5">
+  <thead>
+    <tr class="text-left border">
+      <th>ID</th>
+      <th>Staff</th>
+      <th>Email</th>
+      <th>Department</th>
+      <th>Phone</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (staff of paginatedStaff(); track staff.id) {
+      <tr class="border-b">
+        <td class="py-2">{{ staff.id }}</td>
+        <td class="py-2">{{ staff.fname }} {{ staff.lname }}</td>
+        <td class="py-2">{{ staff.email }}</td>
+        <td class="py-2">{{ staff.department }}</td>
+        <td class="py-2">{{ staff.phone }}</td>
+         <td class="py-2">
+
+          <button
+            type="button"
+            class="bg-red-500 text-white px-3 py-1 rounded"
+            (click)="deleteStaff(staff.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div class="flex items-center gap-4 mt-5">
+  <button
+    type="button"
+    (click)="previousPage()"
+    [disabled]="currentPage() <= 1"
+    class="border rounded px-3 py-1">
+    Previous
+  </button>
+
+  <span>
+    Page {{ currentPage() }} of {{ totalPages() }}
+  </span>
+
+  <button
+    type="button"
+    (click)="nextPage()"
+    [disabled]="currentPage() >= totalPages()"
+    class="border rounded px-3 py-1">
+    Next
+  </button>
+</div>
+
+        </div>
+    </div>
+    
+
+</div>

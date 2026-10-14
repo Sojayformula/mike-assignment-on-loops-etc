@@ -1,0 +1,33 @@
+
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #1976d2;
+}
+
+button {
+  padding: 12px 18px;
+  margin: 5px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #125699;
+}
+
+pre {
+  padding: 15px;
+  background: #f4f4f4;
+  border-radius: 5px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}

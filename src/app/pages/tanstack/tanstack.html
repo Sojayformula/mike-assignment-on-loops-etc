@@ -1,0 +1,182 @@
+<!-- 
+ 
+<h1>TanStack Query - Users</h1>
+
+@if (usersQuery.isPending()) {
+  <p>Loading users...</p>
+}
+
+@if (usersQuery.isError()) {
+  <p class="error">
+    Error: {{ usersQuery.error().message }}
+  </p>
+
+  <button (click)="usersQuery.refetch()">
+    Try Again
+  </button>
+}
+
+@if (usersQuery.isSuccess()) {
+  @for (user of usersQuery.data(); track user.id) {
+    <div class="user-card">
+      <h3>{{ user.name }}</h3>
+      <p>{{ user.email }}</p>
+    </div>
+  }
+}  -->
+
+
+
+<div class="mx-8 mt-10">
+
+<h1>TanStack Table - Users</h1>
+
+
+<button type="button" (click)="addUser()">
+  Add User
+</button>
+
+<!-- <button type="button" (click)="deleteUser(row.original.id)">
+  Delete
+</button> -->
+
+@if (usersQuery.isPending()) {
+  <p>Loading users...</p>
+}
+
+@if (usersQuery.isError()) {
+  <p>Could not load users.</p>
+  <button (click)="usersQuery.refetch()">Retry</button>
+}
+
+@if (usersQuery.isSuccess()) {
+  <div class="filters">
+    <input
+      placeholder="Filter by name"
+      (input)="onFilterChange('name', $event)"
+    />
+
+    <input
+      placeholder="Filter by email"
+      (input)="onFilterChange('email', $event)"
+    />
+
+    <input
+      placeholder="Filter by username"
+      (input)="onFilterChange('username', $event)"
+    />
+  </div>
+
+  <p>
+    Selected users:
+    {{ table.getSelectedRowModel().rows.length }}
+  </p>
+
+  <table>
+    <thead>
+      @for (group of table.getHeaderGroups(); track group.id) {
+        <tr>
+          <th>
+            <input
+              type="checkbox"
+              [checked]="table.getIsAllPageRowsSelected()"
+              (change)="table.toggleAllPageRowsSelected()"
+              aria-label="Select all users on this page"
+            />
+          </th>
+
+          @for (header of group.headers; track header.id) {
+            <th>
+              <button
+                type="button"
+                (click)="header.column.getToggleSortingHandler()?.($event)">
+                {{ header.column.id }}
+                @if (header.column.getIsSorted() === 'asc') {
+                  ↑
+                } @else if (header.column.getIsSorted() === 'desc') {
+                  ↓
+                }
+              </button>
+            </th>
+          }
+        </tr>
+      }
+    </thead>
+    
+    <tbody>
+      @for (row of table.getRowModel().rows; track row.id) {
+        <tr>
+          <td>
+            <input
+              type="checkbox"
+              [checked]="row.getIsSelected()"
+              (change)="row.toggleSelected()"
+              [attr.aria-label]="'Select ' + row.original.fname"
+            />
+          </td>
+
+          <td>{{ row.original.fname }}</td>
+          <td>{{ row.original.email }}</td>
+          <td>{{ row.original.username }}</td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="4">No matching users found.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+} 
+
+
+
+
+
+
+
+<div class="flex items-center gap-3 mt-4">
+
+  <button
+    type="button"
+    (click)="firstPage()"
+    [disabled]="pageIndex() === 0">
+    First
+  </button>
+
+  <button
+    type="button"
+    (click)="previousPage()"
+    [disabled]="pageIndex() === 0">
+    Previous
+  </button>
+
+  <span>
+    Page {{ pageIndex() + 1 }}
+    of {{ Math.max(1, Math.ceil(
+      (usersQuery.data()?.total ?? 0) / pageSize()
+    )) }}
+  </span>
+
+  <button
+    type="button"
+    (click)="nextPage()"
+    [disabled]="
+      (pageIndex() + 1) * pageSize() >=
+      (usersQuery.data()?.total ?? 0)
+    ">
+    Next
+  </button>
+
+  <button
+    type="button"
+    (click)="lastPage()"
+    [disabled]="
+      pageIndex() >= Math.max(0, Math.ceil(
+        (usersQuery.data()?.total ?? 0) / pageSize()
+      ) - 1)
+    ">
+    Last
+  </button>
+
+</div>

@@ -1,0 +1,46 @@
+
+<!-- <div class="container">
+
+
+  <button (click)="testRequest()">Test HTTP Request</button>
+
+  <button (click)="clearResults()">Clear Results</button>
+
+  <h2>Results</h2>
+
+  <pre>{{ result }}</pre>
+</div> -->
+
+
+
+
+
+<!-- ERROR MESSAGE FROM INTERCEPTOR -->
+<div class="container">
+  <h1>Angular Error Handling Demo</h1>
+<div>
+  <button (click)="testRequest()" [disabled]="loading">
+    {{ loading ? 'Loading...' : 'Test API Request' }}
+  </button>
+
+  <button (click)="clearResults()">Clear Results</button>
+  </div>
+
+  @if (loading) {
+    <p>Sending request to the API...</p>
+  }
+
+  @if (errorMessage) {
+    <div class="error-box" role="alert">
+      <strong>Request failed!</strong>
+      <p>{{ errorMessage }}</p>
+    </div>
+  }
+
+  @if (result) {
+    <div class="success-box">
+      <h2>API Response</h2>
+      <pre>{{ result }}</pre>
+    </div>
+  }
+</div>

@@ -1,0 +1,19 @@
+
+
+<h1>Do-While Menu Example</h1>
+
+<button (click)="menuDoWhile()">
+  Run Menu
+</button>
+
+<h2>Output</h2>
+
+@if (output.length > 0) {
+  <ul>
+    @for (item of output; track $index) {
+      <li>{{ item }}</li>
+    }
+  </ul>
+} @else {
+  <p>Click "Run Menu" to display the output.</p>
+}

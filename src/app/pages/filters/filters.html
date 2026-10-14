@@ -1,0 +1,120 @@
+<div class="mx-8">
+
+    <table class="w-full mt-10 border-b">
+        <thead>
+            <tr class="text-left">
+                <th>id</th>
+                <th>Name</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @for (item of staff; track item.id) {
+                <td>{{item.id}}</td>
+                <td>{{item.fname}}</td>
+                <td>{{item.phone}}</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+
+
+
+  <table class="w-full mt-10">
+  <thead>
+    <tr class="text-left">
+      <th>ID</th>
+      <th>Name</th>
+      <th>Phone</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (item of staffData; track $index) {
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.fullName }}</td>
+        <td>{{ item.phone }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+
+
+<!-- BEHAVORIAL SUBJECT -->
+ <ul class="mt-10">
+    @for(salary of salaries; track $index){
+    <li>
+        GHS{{salary}}
+    </li>
+}
+ </ul>
+
+
+ <!-- BEHAIOR HIGHER SALARY -->
+  <h3>Staff earning more than GHS 5,000</h3>
+
+@for (user of (higherPaidStaff | async); track user.id) {
+  <p>
+    {{ user.name }} - GHS {{ user.salary }}
+  </p>
+}
+
+
+ <!-- SALARY GREATER THAN 5000 -->
+  <!-- @for(staff of result; track staff.id){
+    <p class="mt-5">
+      Name: {{staff.name}}
+      GHS{{staff.salary}}
+    </p>
+  } -->
+
+
+  <!-- TRANSFORM DATA -->
+   <!-- @for(item of result2; track item){
+    <p>Name: {{item}}</p>
+   } -->
+
+
+
+   <!-- ALL IN ONE -->
+<div class="mb-5">
+    <h2 class="mt-10 border-b">Staff Bonus Report</h2>
+
+@for (user of getHigher; track user.fullName) {
+  <div class="staff-card">
+    <p>Name: {{ user.fullName }}</p>
+    <p>Bonus: GHS {{ user.bonus }}</p>
+    <p>Department: {{ user.department }}</p>
+  </div>
+}
+
+</div>
+
+
+
+<!-- EVEN AND ODD -->
+<!-- <h1>Even and Odd Numbers</h1>
+
+<button (click)="getEvenNumbers()">
+  Show Even Numbers
+</button>
+
+<button (click)="getOddNumbers()">
+  Show Odd Numbers
+</button>
+
+<h2>Output</h2>
+
+@if (output.length > 0) {
+  @for (number of output; track $index) {
+    <span>{{ number }} </span>
+  }
+} @else {
+  <p>Click a button to display the numbers.</p>
+}
+    -->
+
+    </div>
